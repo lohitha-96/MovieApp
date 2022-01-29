@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;500;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/appStyle.css}">
+<link
+	href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;600&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+</head>
+<body>
+	<div id="navbar">
+		<div class="brand">
+			<a href="/"><i class="fas fa-video"></i> MovieInfo</a>
+		</div>
+		<form class="search" action="/results" method="GET">
+			<input class="movie-input" type="text"
+				placeholder="Enter movie keyword" name="movie" required>
+			<button>
+				<i class="fas fa-search"></i>
+			</button>
+		</form>
+	</div>
+	<form method="POST" action="addToFavourites">
+	<div class="container">
+		<div class="card">
+		<div class="card-image-box">
+			<img th:src="${Poster}" onerror="this.src ='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkmpiE3saxLv17jlQVpffuUAAtU95HJoaPRw&amp;usqp=CAU'" height="250px" , width="400px">
+		</div>
+			<div class="card-title">
+				<p th:text="${Title}"></p>
+			</div>
+				<div class="card-description">
+					<a href="" onclick="return alert('Added to favourites')">Add As Favourite</a>
+				</div>
+				<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Year :</label>
+				<p th:text="${Year}"></p>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Rated :</label>
+				<p th:text="${Rated}"></p>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Released :</label>
+				<p th:text="${Released}"></p>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Actors :</label>
+				<p th:text="${Actors}"></p>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Director :</label>
+				<p th:text="${Director}"></p>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Writer :</label>
+				<p th:text="${Writer}"></p>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Language :</label>
+				<p th:text="${Language}"></p>
+			</div>
+			<div style="display: flex; flex-direction: row; align-items: center">
+				<label> Country :</label>
+				<p th:text="${Country}"></p>
+			</div>
+		</div>
+		</div>
+	</form>
+</body>
+</html>
