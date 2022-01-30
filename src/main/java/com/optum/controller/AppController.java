@@ -36,34 +36,34 @@ public class AppController {
 	@Autowired
 	private FavouriteMovieService favouriteMovieService;
 
-//	@Autowired
-//	LoginService logInService;
-//	
-//	@PostMapping("/login")
-//	public String logIn(User user) {
-//		try {
-//			boolean isAdded = logInService.addUser(user);
-//			if (isAdded) {
-//				return "User is Added..!!";
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return "User Not Added..!!";
-//	}
-//
-//	@PostMapping("/signup")
-//	public String SignUp(User user) {
-//
-//		try {
-//			if (logInService.signUpUser(user)) {
-//				return "SignUp Successfull";
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return "SignUp Failed might be username or password is incorrect";
-//	}
+	@Autowired
+	LoginService logInService;
+	
+	@PostMapping("/login")
+	public String logIn(User user) {
+		try {
+			boolean isAdded = logInService.addUser(user);
+			if (isAdded) {
+				return "User is Added..!!";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "User Not Added..!!";
+	}
+
+	@PostMapping("/signup")
+	public String SignUp(User user) {
+
+		try {
+			if (logInService.signUpUser(user)) {
+				return "SignUp Successfull";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "SignUp Failed might be username or password is incorrect";
+	}
 
 	// http://localhost:9091/movieapp/deletefav/moviename
 	@DeleteMapping("deletefav/{title}")
