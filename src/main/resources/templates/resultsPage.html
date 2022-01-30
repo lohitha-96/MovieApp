@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -25,54 +25,44 @@
 			<button>
 				<i class="fas fa-search"></i>
 			</button>
+			<!--  <button>
+			<img alt="" src="/images/add-favorites-icon.jpg" align="right" height="20px" width="30px">
+			</button>-->
 		</form>
 	</div>
-	<form method="POST" action="addToFavourites">
 	<div class="container">
-		<div class="card">
-		<div class="card-image-box">
-			<img th:src="${Poster}" onerror="this.src ='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkmpiE3saxLv17jlQVpffuUAAtU95HJoaPRw&amp;usqp=CAU'" height="250px" , width="400px">
-		</div>
-			<div class="card-title">
-				<p th:text="${Title}"></p>
-			</div>
+		<div th:each="movie : ${movielist}" class="card">
+			<form th.action="@{/addToFavourites}" action="#"
+				th.object="${favouriteModel}" method=GET>
+				<div class="card-image-box">
+					<img th:src="${movie.Poster}"
+						onerror="this.src ='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkmpiE3saxLv17jlQVpffuUAAtU95HJoaPRw&amp;usqp=CAU'"
+						height="250px" , width="400px">
+				</div>
+				<div class="card-title">
+					<p th:text="${movie.Title}" th:field="*{Title}"></p>
+				</div>
 				<div class="card-description">
-					<a href="" onclick="return alert('Added to favourites')">Add As Favourite</a>
+					<a href="" onclick="return alert('Added to favourites')">Add As
+						Favourite</a>
 				</div>
 				<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Year :</label>
-				<p th:text="${Year}"></p>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Rated :</label>
-				<p th:text="${Rated}"></p>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Released :</label>
-				<p th:text="${Released}"></p>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Actors :</label>
-				<p th:text="${Actors}"></p>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Director :</label>
-				<p th:text="${Director}"></p>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Writer :</label>
-				<p th:text="${Writer}"></p>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Language :</label>
-				<p th:text="${Language}"></p>
-			</div>
-			<div style="display: flex; flex-direction: row; align-items: center">
-				<label> Country :</label>
-				<p th:text="${Country}"></p>
-			</div>
+					<label> Year :</label>
+					<p th:text="${movie.Year}" th:field="*{Year}"></p>
+				</div>
+				<div style="display: flex; flex-direction: row; align-items: center">
+					<label> Type :</label>
+					<p th:text="${movie.Rated}" th:field="*{Rated}"></p>
+				</div>
+				<div style="display: flex; flex-direction: row; align-items: center">
+					<label> Released :</label>
+					<p th:text="${movie.Year}" th:field="*{Released}"></p>
+				</div>
+				<!--  <button name="submit" value="0" type="submit">submit</button>-->
+			</form>
+
 		</div>
-		</div>
-	</form>
+	</div>
+
 </body>
 </html>
