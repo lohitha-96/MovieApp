@@ -44,10 +44,6 @@
                     <input type="hidden" th:attr="field = *{title} , value = ${movie.Title}" name="Title"/>
 					
 				</div>
-				<div class="card-description">
-					<a href="" onclick="return alert('Added to favourites')">Add As
-						Favourite</a>
-				</div>
 				<div style="display: flex; flex-direction: row; align-items: center">
 					<label> Year :</label>
 					<p th:text="${movie.Year}" th:field="*{Year}" th:value="${movie.Year}"></p>
