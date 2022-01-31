@@ -5,12 +5,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
 
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,31 +17,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.optum.model.Movie;
-
 import com.optum.model.FavouriteModel;
+import com.optum.model.Movie;
 import com.optum.model.User;
 import com.optum.service.FavouriteMovieService;
 //import com.optum.service.LoginService;
+import com.optum.service.LoginService;
 
-@RestController
+@Controller
+//@RequestMapping("/movieapp")
 public class AppController {
 
 	@Autowired
 	private FavouriteMovieService favouriteMovieService;
 
 	@Autowired
-	LoginService logInService;
+	private LoginService logInService;
 	
 	@PostMapping("/login")
 	public String logIn(User user) {
 		try {
 			boolean isAdded = logInService.addUser(user);
 			if (isAdded) {
-				return "User is Added..!!";
+				return "loginsuccess";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,11 +50,12 @@ public class AppController {
 	}
 
 	@PostMapping("/signup")
+	//@ResponseBody
 	public String SignUp(User user) {
 
 		try {
 			if (logInService.signUpUser(user)) {
-				return "SignUp Successfull";
+				return "resultsPage";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,6 +65,7 @@ public class AppController {
 
 	// http://localhost:9091/movieapp/deletefav/moviename
 	@DeleteMapping("deletefav/{title}")
+	@ResponseBody
 	public String deleteFavourite(@PathVariable("title") String title) {
 		try {
 			if (favouriteMovieService.deleteFavourite(title)) {
@@ -88,12 +87,6 @@ public class AppController {
 			e.printStackTrace();
 		}
 		//return "Movie has been Added into Favourite Collection";
-	}
-
-	@GetMapping("/test")
-	public String test() {
-
-		return "Hello";
 	}
 
 	@GetMapping("/results")

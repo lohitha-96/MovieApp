@@ -3,12 +3,11 @@ package com.optum.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.optum.model.User;
 
 @Controller
-@RequestMapping("/movieapp")
+//@RequestMapping("/movieapp")
 public class ResAppController { // returning resources(jsp pages)
 
 	// http://localhost:9091/movieapp/login
