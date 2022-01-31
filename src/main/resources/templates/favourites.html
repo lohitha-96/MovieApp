@@ -21,11 +21,52 @@
 		</div>
 		<form class="search" action="/results" method="GET">
 			<input class="movie-input" type="text"
-				placeholder="Enter movie keyword" name="movie" required>
+				placeholder="Enter movie keyword" name="movie">
 			<button>
 				<i class="fas fa-search"></i>
 			</button>
 		</form>
 	</div>
+		<div class="container">
+		<div th:if="${#lists.isEmpty(favouritesmovies)}">
+ <h3> No Favourites added , please add and come back!!</h3>
+</div>
+		<div th:each="movie : ${favouritesmovies}" class="card">
+		<form th.action="@{/deletefav}" action="deletefav"
+				th.object="${delMovie}" th:method="delete">
+		<div class="card-image-box">
+					<img th:src="${movie.Poster}"
+						onerror="this.src ='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkmpiE3saxLv17jlQVpffuUAAtU95HJoaPRw&amp;usqp=CAU'"
+						height="250px" , width="400px">
+				</div>
+				<div class="card-title">
+					<p th:text="${movie.Title}" th:field="*{title}" th:attr="value = ${movie.Title}"></p>
+                    <input type="hidden" th:attr="field = *{title} , value = ${movie.Title}" name="Title"/>
+					
+				</div>
+				<div class="card-description">
+					<a href="" onclick="return alert('Added to favourites')">Add As
+						Favourite</a>
+				</div>
+				<div style="display: flex; flex-direction: row; align-items: center">
+					<label> Year :</label>
+					<p th:text="${movie.Year}" th:field="*{Year}" th:value="${movie.Year}"></p>
+				</div>
+				<div style="display: flex; flex-direction: row; align-items: center">
+					<label> Type :</label>
+					<p th:text="${movie.Rated}" th:field="*{Rated}" th:value="${movie.Rated}"></p>
+				</div>
+				<div style="display: flex; flex-direction: row; align-items: center">
+					<label> Released :</label>
+					<p th:text="${movie.Year}" th:field="*{Released}" th:value="${movie.Year}"></p>
+				</div>
+				<div class="card-description">
+				  <button name="submit" value="0" type="submit">Delete from Favourites List</button>
+				  </div>
+				  </form>
+		</div>
+		
+		</div>
+		</div>
 </body>
 </html>

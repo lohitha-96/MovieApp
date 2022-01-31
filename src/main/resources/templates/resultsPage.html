@@ -25,40 +25,40 @@
 			<button>
 				<i class="fas fa-search"></i>
 			</button>
-			<!--  <button>
-			<img alt="" src="/images/add-favorites-icon.jpg" align="right" height="20px" width="30px">
-			</button>-->
 		</form>
 	</div>
 	<div class="container">
 		<div th:each="movie : ${movielist}" class="card">
-			<form th.action="@{/addToFavourites}" action="#"
-				th.object="${favouriteModel}" method=GET>
+			<form th.action="@{/addToFavourites}" action="addToFavourites"
+				th.object="${favouriteModel}" method=POST>
 				<div class="card-image-box">
 					<img th:src="${movie.Poster}"
 						onerror="this.src ='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkmpiE3saxLv17jlQVpffuUAAtU95HJoaPRw&amp;usqp=CAU'"
 						height="250px" , width="400px">
+					<input type="hidden" th:attr="field = *{poster} , value = ${movie.Poster}" name="Poster"/>	
 				</div>
 				<div class="card-title">
-					<p th:text="${movie.Title}" th:field="*{Title}"></p>
-				</div>
-				<div class="card-description">
-					<a href="" onclick="return alert('Added to favourites')">Add As
-						Favourite</a>
+					<p th:text="${movie.Title}" th:field="*{title}" th:attr="value = ${movie.Title}"></p>
+					<input type="hidden" th:attr="field = *{title} , value = ${movie.Title}" name="Title"/>
 				</div>
 				<div style="display: flex; flex-direction: row; align-items: center">
 					<label> Year :</label>
-					<p th:text="${movie.Year}" th:field="*{Year}"></p>
+					<p th:text="${movie.Year}" th:field="*{Year}" th:value="${movie.Year}"></p>
+					<input type="hidden" th:attr="field = *{year} , value = ${movie.Year}" name="Year"/>
 				</div>
 				<div style="display: flex; flex-direction: row; align-items: center">
 					<label> Type :</label>
-					<p th:text="${movie.Rated}" th:field="*{Rated}"></p>
+					<p th:text="${movie.Rated}" th:field="*{Rated}" th:value="${movie.Rated}"></p>
+					<input type="hidden" th:attr="field = *{rated} , value = ${movie.Rated}" name="Rated"/>
 				</div>
 				<div style="display: flex; flex-direction: row; align-items: center">
 					<label> Released :</label>
-					<p th:text="${movie.Year}" th:field="*{Released}"></p>
+					<p th:text="${movie.Year}" th:field="*{Released}" th:value="${movie.Year}"></p>
+					<input type="hidden" th:attr="field = *{released} , value = ${movie.Year}" name="Released"/>
 				</div>
-				<!--  <button name="submit" value="0" type="submit">submit</button>-->
+				<div class="card-description">
+				  <button name="submit" value="0" type="submit">Add to favourites</button>
+				  </div>
 			</form>
 
 		</div>

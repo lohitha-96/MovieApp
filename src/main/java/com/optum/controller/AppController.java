@@ -8,16 +8,11 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.optum.model.FavouriteModel;
 import com.optum.model.Movie;
@@ -64,40 +59,37 @@ public class AppController {
 	}
 
 	// http://localhost:9091/movieapp/deletefav/moviename
-	@DeleteMapping("deletefav/{title}")
-	@ResponseBody
-	public String deleteFavourite(@PathVariable("title") String title) {
+	@PostMapping("/deletefav")
+	public String deleteFavourite(FavouriteModel favouriteModel, Model model) {
 		try {
-			if (favouriteMovieService.deleteFavourite(title)) {
-				return "Movie found in Favourite with the title " + title + " and deleted";
+			if (favouriteMovieService.deleteFavourite(favouriteModel.getTitle())) {
+				model.addAttribute("favouritesmovies", favouriteMovieService.getAllFavouriteMovieCollection());
+				model.addAttribute("delMovie", new FavouriteModel());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Movie not found to delete in Favourites Collection";
+		return "favourites";
 	}
 
 	// http://localhost:9091/movieapp/addfav
-	@RequestMapping(value="/addToFavourites")
-	public void addFavourite(@RequestBody FavouriteModel favouriteModel) {
-		System.out.println("**************** fav model Title :" + favouriteModel.getTitle());
+	@PostMapping(value="/addToFavourites")
+	public String addFavourite(FavouriteModel favouriteModel  , Model model) {
 		try {
 			favouriteMovieService.addFavCollection(favouriteModel);
+			model.addAttribute("favouritesmovies", favouriteMovieService.getAllFavouriteMovieCollection());
+			model.addAttribute("delMovie", new FavouriteModel());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//return "Movie has been Added into Favourite Collection";
+		return "favourites";
 	}
 
 	@GetMapping("/results")
-	@ResponseBody
-	public ModelAndView searchMovies(@RequestParam("movie") String movieName) {
+	public String searchMovies(@RequestParam("movie") String movieName , Model model) {
 		String url = "http://www.omdbapi.com/";
 		String charset = "UTF-8";
 		String query;
-		String inline = null;
-		ModelAndView modelAndview = new ModelAndView();
-		modelAndview.setViewName("resultsPage.html");
 
 		try {
 			query = String.format("s=%s&apikey=e742800f", URLEncoder.encode(movieName, charset));
@@ -107,7 +99,7 @@ public class AppController {
 			conn.setRequestMethod("GET");
 			conn.connect();
 			String msg = StreamUtils.copyToString(url1.openStream(), Charset.defaultCharset());
-			System.out.println("****************************" + msg);
+			//System.out.println("****************************" + msg);
 			String[] movieArray = msg.split("\\[");
 			String[] movieSummary = movieArray[1].split("\\}");
 			ArrayList<Movie> movie = new ArrayList<>();
@@ -156,13 +148,13 @@ public class AppController {
 					movie.add(movies);
 				}
 			}
-			modelAndview.addObject("favouriteModel", new FavouriteModel());
-			modelAndview.addObject("movielist", movie);
+			model.addAttribute("favouriteModel", new FavouriteModel());
+			model.addAttribute("movielist", movie);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return modelAndview;
+		return "resultsPage";
 	}
 }

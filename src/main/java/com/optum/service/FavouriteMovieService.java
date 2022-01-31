@@ -15,6 +15,10 @@ public class FavouriteMovieService {
 		favouriteList.add(favourateRequest);
 		
 	}
+	
+	public ArrayList<FavouriteModel> getAllFavouriteMovieCollection() {
+		return favouriteList;
+	}
 
 	public boolean deleteFavourite(String title) throws Exception {
 		for (FavouriteModel user : favouriteList) {
